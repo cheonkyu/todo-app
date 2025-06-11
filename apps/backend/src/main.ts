@@ -1,21 +1,29 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
-import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter({
+      logger: true
+    }),
   );
-}
 
-bootstrap();
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('port');
+
+  app.setGlobalPrefix('api');
+  app.enableCors();
+  app.useGlobalPipes(new ValidationPipe());
+
+  try {
+    await app.listen(port, '0.0.0.0');
+    console.log(`Application is running on: http://localhost:${port}`);
+  } catch (error) {
+    console.error('Failed to start the application:', error);
+  }
+}
+bootstrap(); 
