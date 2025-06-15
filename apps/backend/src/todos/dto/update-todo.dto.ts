@@ -1,6 +1,7 @@
+import { Todo } from '@todo-app/libs';
 import { IsString, IsOptional, IsBoolean, IsDateString } from 'class-validator';
 
-export class UpdateTodoDto {
+export class UpdateTodoDto implements Partial<Todo> {
   @IsString()
   @IsOptional()
   title?: string;

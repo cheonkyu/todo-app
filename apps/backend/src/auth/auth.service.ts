@@ -53,12 +53,12 @@ export class AuthService {
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('아이디, 비밀번호를 확인해주세요.');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('아이디, 비밀번호를 확인해주세요.');
     }
 
     const tokens = await this.getTokens(user._id.toString(), user.email);

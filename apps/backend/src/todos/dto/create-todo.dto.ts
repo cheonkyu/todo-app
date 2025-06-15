@@ -1,6 +1,7 @@
+import { Todo } from '@todo-app/libs';
 import { IsString, IsOptional, IsBoolean, IsDateString } from 'class-validator';
 
-export class CreateTodoDto {
+export class CreateTodoDto implements Omit<Todo, 'id'> {
   @IsString()
   title: string;
 

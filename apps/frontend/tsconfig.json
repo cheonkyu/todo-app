@@ -3,16 +3,14 @@
   "include": [],
   "references": [
     {
+      "path": "../../libs"
+    },
+    {
       "path": "./tsconfig.app.json"
     },
     {
       "path": "./tsconfig.spec.json"
     }
   ],
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "moduleResolution": "bundler",
-    "types": ["@react-router/node"]
-  }
+  "extends": "../../tsconfig.base.json"
 }

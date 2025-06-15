@@ -1,6 +1,6 @@
 import { IsEmail, IsString, MinLength, Matches } from 'class-validator';
-
-export class SignupDto {
+import { SignupForm } from '@todo-app/libs'
+export class SignupDto implements SignupForm {
   @IsString()
   @MinLength(2)
   name: string;

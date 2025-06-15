@@ -48,3 +48,5 @@ vitest.config.*.timestamp*
 test-output
 
 dist
+apps/backend/dist
+apps/backend/dist/*
